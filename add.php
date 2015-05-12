@@ -7,8 +7,9 @@ if( isset( $_POST['post-title'] ) && isset( $_POST['post-content']) ){
 	
 	$title = $_POST['post-title'];
 	$content = $_POST['post-content'];
+	$date = $_POST['post-date'];
 	
-	$blog->addPost( $title, $content );
+	$blog->addPost( $title, $content, $date );
 	
 }
 
@@ -24,7 +25,7 @@ if( isset( $_POST['post-title'] ) && isset( $_POST['post-content']) ){
 </head>
 
 <body>
-	<form action='add.php' method=POST>
+	<form action='add.php' method=POST class=addpostform>
 	<table>
 		<tr>
 			<td>
@@ -46,9 +47,25 @@ if( isset( $_POST['post-title'] ) && isset( $_POST['post-content']) ){
 	<script>
 	$(function() {
 		$( "#datepicker" ).datepicker({
-			minDate : new Date()
+			minDate : new Date(),
+			defaultDate : new Date()
+			
+		});
+	
+		$('.addpostform').submit(function( event ){
+			var d = new Date();
+			var strippedD = new Date(d.getFullYear(), d.getMonth(), d.getDay() );
+			// pake Date.parse karena kalau new Date bisa ngaco kalau tahun nya < 1970
+			var selectedTime = Date.parse( $('#datepicker').val() );
+			
+			if( selectedTime < strippedD.getTime() )
+			{
+				alert('Error : Tanggal seharusnya lebih dari hari ini');
+				event.preventDefault();
+			}
 		});
 	});
+	
 	</script>
 
 	</form>
