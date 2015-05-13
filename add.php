@@ -38,6 +38,7 @@ if( isset( $_POST['post-title'] ) && isset( $_POST['post-content']) ){
 			<td> Tanggal :
 			<td>
 				<input name='post-date' id=datepicker type=text />
+				<span id=post-date-error></span>
 		<tr>
 			<td valign=top> Konten : 
 			<td>
@@ -56,15 +57,37 @@ if( isset( $_POST['post-title'] ) && isset( $_POST['post-content']) ){
 			
 		});
 	
-		$('.addpostform').submit(function( event ){
+		function isValidPostDate(){
 			var d = new Date();
 			var strippedD = new Date(d.getFullYear(), d.getMonth(), d.getDay() );
 			// pake Date.parse karena kalau new Date bisa ngaco kalau tahun nya < 1970
 			var selectedTime = Date.parse( $('#datepicker').val() );
 			
-			if( selectedTime < strippedD.getTime() )
+			return selectedTime >= strippedD.getTime();
+		}
+	
+		function validateDate(){
+			if( !isValidPostDate() )
 			{
-				alert('Error : Tanggal seharusnya lebih dari hari ini');
+				$('#post-date-error')
+					.html('Error : Tanggal seharusnya lebih dari hari ini')
+					.show();
+				return false;
+			}
+			else {
+				$('#post-date-error')
+					.hide();
+			}
+			return true;
+		}
+	
+		$('#datepicker').change(function( event ){
+			validateDate();
+		});
+	
+		$('.addpostform').submit(function( event ){
+			if( !validateDate() )
+			{
 				event.preventDefault();
 			}
 		});
@@ -75,3 +98,4 @@ if( isset( $_POST['post-title'] ) && isset( $_POST['post-content']) ){
 	</form>
 </body>
 </html>
+
