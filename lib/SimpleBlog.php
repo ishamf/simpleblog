@@ -70,9 +70,7 @@ class SimpleBlog {
 			VALUES ('$title','$content','$date');
 		";
 		
-		if( !$result = $db->query( $sql )) {
-			die('There was an error running the query [' . $db->error . ']');
-		}
+		return $this->query( $sql );
 	}
 	
 	public function deletePost( $pid ){
@@ -85,9 +83,7 @@ class SimpleBlog {
 			DELETE FROM posts WHERE id = $pid LIMIT 1;
 		";
 		
-		if( !$result = $db->query( $sql )) {
-			die('There was an error running the query [' . $db->error . ']');
-		}
+		return $this->query( $sql );
 	}
 	
 	public function updatePost( $pid, $title, $content, $date = 0 ){
@@ -111,9 +107,7 @@ class SimpleBlog {
 			WHERE id = $pid;
 		";
 		
-		if( !$result = $db->query( $sql )) {
-			die('There was an error running the query [' . $db->error . ']');
-		}
+		return $this->query( $sql );
 	}
 	
 	public function listPostJSON( $limit ){
@@ -129,15 +123,10 @@ class SimpleBlog {
 			LIMIT $limit;
 		";
 		
-		if( !$result = $db->query( $sql )) {
-			die('There was an error running the query [' . $db->error . ']');
-		}
-		
-		return $result;
+		return $this->query( $sql );
 	}
 		
 	public function getPostById( $id ){
-		$db = $this->db;
 		// filter input
 		$id = intval( $id );
 		
@@ -148,11 +137,7 @@ class SimpleBlog {
 			LIMIT 1;
 		";
 		
-		if( !$result = $db->query( $sql )) {
-			die('There was an error running the query [' . $db->error . ']');
-		}
-		
-		return $result;
+		return $this->query( $sql );
 	}
 	
 	public function addComment( $pid, $name, $email, $content ){
@@ -168,9 +153,7 @@ class SimpleBlog {
 			VALUES ( '$pid', '$name', '$email', '$content');
 		";
 		
-		if( !$result = $db->query( $sql )) {
-			die('There was an error running the query [' . $db->error . ']');
-		}
+		$this->query( $sql );
 	}
 	
 	public function getCommentsByPostId( $id ){
@@ -183,12 +166,18 @@ class SimpleBlog {
 			WHERE postId = '$id';
 		";
 		
-		if( !$result = $db->query( $sql )) {
+		return $this->query( $sql );
+	}
+	
+	public function query( $query ){
+		$db = $this->db;
+		if( !$result = $db->query( $query )) {
 			die('There was an error running the query [' . $db->error . ']');
 		}
 		
 		return $result;
 	}
+	
 };
 
 ?>
