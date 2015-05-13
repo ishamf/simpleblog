@@ -51,6 +51,19 @@ class SimpleBlog {
 		}
 	}
 	
+	private function query( $query ){
+		$db = $this->db;
+		if( !$result = $db->query( $query )) {
+			die('There was an error running the query [' . $db->error . ']');
+		}
+		
+		return $result;
+	}
+	
+	private function cleanString( &$str ) {
+		$str = addslashes( $this->db->real_escape_string( $str ) );
+	}
+
 	public function addPost( $title, $content, $date = 0 ){
 		$db = $this->db;
 		
@@ -61,9 +74,9 @@ class SimpleBlog {
 			$date = date("Y-m-d H:i:s", strtotime($date) ); ;
 		}
 		
-		$title = addslashes( $db->real_escape_string( $title ) );
-		$content = addslashes( $db->real_escape_string( $content ) );
-		$date = addslashes( $db->real_escape_string( $date ) );
+		$this->cleanString( $title );
+		$this->cleanString( $content );
+		$this->cleanString( $date );
 		
 		$sql = "
 			INSERT INTO posts ( title, content, date_created )
@@ -79,11 +92,17 @@ class SimpleBlog {
 		// just to be save
 		$pid = intval( $pid );
 		
+		$deleteCommentQuery = "
+			DELETE FROM comments WHERE postid = $pid;
+		";
+		
+		$this->query( $deleteCommentQuery );
+		
 		$sql = "
 			DELETE FROM posts WHERE id = $pid LIMIT 1;
 		";
 		
-		return $this->query( $sql );
+		$this->query( $sql );
 	}
 	
 	public function updatePost( $pid, $title, $content, $date = 0 ){
@@ -97,9 +116,9 @@ class SimpleBlog {
 		}
 
 		$pid = intval( $pid );
-		$title = addslashes( $db->real_escape_string( $title ) );
-		$content = addslashes( $db->real_escape_string( $content ) );
-		$date = addslashes( $db->real_escape_string( $date ) );
+		$this->cleanString( $title );
+		$this->cleanString( $date );
+		$this->cleanString( $content );
 		
 		$sql = "
 			UPDATE posts
@@ -144,9 +163,9 @@ class SimpleBlog {
 		$db = $this->db;
 		$pid = intval( $pid );
 		
-		$name = addslashes( $db->real_escape_string( $name ) );
-		$email = addslashes( $db->real_escape_string( $email ) );
-		$content = addslashes( $db->real_escape_string( $content ) );
+		$this->cleanString( $name );
+		$this->cleanString( $email );
+		$this->cleanString( $content );
 		
 		$sql = "
 			INSERT INTO comments ( postId, name, email, comment )
@@ -168,16 +187,7 @@ class SimpleBlog {
 		
 		return $this->query( $sql );
 	}
-	
-	private function query( $query ){
-		$db = $this->db;
-		if( !$result = $db->query( $query )) {
-			die('There was an error running the query [' . $db->error . ']');
-		}
 		
-		return $result;
-	}
-	
 };
 
 ?>
