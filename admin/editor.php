@@ -111,7 +111,7 @@
   <div class="editor-container"></div>
 </div>
 
-<button class="submit">Submit</button>
+<button class="submit"><?php echo $buttonText ?></button>
 
 <script src="../js/jquery-1.10.2.js"></script>
 <script src="../js/jquery-ui.js"></script>
@@ -142,7 +142,7 @@
       'post-content': editor.getHTML()
     }, function(){
       window.location.href = 'list.php';
-    })
+    });
   });
 
 
