@@ -14,7 +14,7 @@ if( isset( $_POST['post-title'] ) && isset( $_POST['post-content']) ){
 } else {
 	$post_content = ''; $post_title = ''; $post_date = '';
 
-	include('editor.php';)
+	include('editor.php');
 }
 
 ?>
