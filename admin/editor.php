@@ -133,9 +133,7 @@
   editor.setHTML(<?php echo json_encode($post_content); ?>);
 
 
-  console.log('Attaching handler');
   $('.submit').click(function(){
-    console.log('Sending data...');
     $.post('', {
       'post-title': $('input[name=post-title]').val(),
       'post-date': $('input[name=post-date]').val(),
