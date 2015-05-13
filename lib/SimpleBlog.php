@@ -103,16 +103,30 @@ class SimpleBlog {
 			LIMIT $limit;
 		";
 		
-		echo $sql;
 		if( !$result = $db->query( $sql )) {
 			die('There was an error running the query [' . $db->error . ']');
 		}
 		
 		return $result;
 	}
-	
-	public function viewPost( $id ){
 		
+	public function getPostById( $id ){
+		$db = $this->db;
+		// filter input
+		$id = intval( $id );
+		
+		$sql = "
+			SELECT id, title, content, date_created
+			FROM posts
+			WHERE id = $id
+			LIMIT 1;
+		";
+		
+		if( !$result = $db->query( $sql )) {
+			die('There was an error running the query [' . $db->error . ']');
+		}
+		
+		return $result;
 	}
 	
 	public function addComment( $pid, $name, $email, $content ){
