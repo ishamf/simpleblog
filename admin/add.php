@@ -1,5 +1,5 @@
 <?php
-include('lib/SimpleBlog.php');
+include('../lib/SimpleBlog.php');
 
 if( isset( $_POST['post-title'] ) && isset( $_POST['post-content']) ){
 	$blog = new SimpleBlog( 'localhost','root','','test');
@@ -17,9 +17,9 @@ if( isset( $_POST['post-title'] ) && isset( $_POST['post-content']) ){
 <html lang=en>
 <head>
 	<title>SimpleBlog - Add Post </title>
-	<link rel="stylesheet" href="css/smoothness/jquery-ui.css">
-	<script src="js/jquery-1.10.2.js"></script>
-	<script src="js/jquery-ui.js"></script>
+	<link rel="stylesheet" href="../css/smoothness/jquery-ui.css">
+	<script src="../js/jquery-1.10.2.js"></script>
+	<script src="../js/jquery-ui.js"></script>
 </head>
 
 <body>
