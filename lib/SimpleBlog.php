@@ -57,11 +57,20 @@ class SimpleBlog {
 		if( empty( $date ) ){
 			$date = date("Y-m-d H:i:s", time()); ;
 		}
+		else {
+			$date = date("Y-m-d H:i:s", strtotime($date) ); ;
+		}
+		
+		$title = addslashes( $db->real_escape_string( $title ) );
+		$content = addslashes( $db->real_escape_string( $content ) );
+		$date = addslashes( $db->real_escape_string( $date ) );
 		
 		$sql = "
 			INSERT INTO posts ( title, content, date_created )
 			VALUES ('$title','$content','$date');
 		";
+		
+		echo $sql;
 		
 		if( !$result = $db->query( $sql )) {
 			die('There was an error running the query [' . $db->error . ']');
@@ -69,6 +78,9 @@ class SimpleBlog {
 	}
 	
 	public function deletePost( $pid ){
+		$db = $this->db;
+		
+		
 		
 	}
 	

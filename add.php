@@ -1,7 +1,6 @@
 <?php
 include('lib/SimpleBlog.php');
 
-
 if( isset( $_POST['post-title'] ) && isset( $_POST['post-content']) ){
 	$blog = new SimpleBlog( 'localhost','root','','test');
 	
@@ -10,7 +9,6 @@ if( isset( $_POST['post-title'] ) && isset( $_POST['post-content']) ){
 	$date = $_POST['post-date'];
 	
 	$blog->addPost( $title, $content, $date );
-	
 }
 
 ?>
