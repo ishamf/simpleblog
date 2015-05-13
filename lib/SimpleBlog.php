@@ -80,8 +80,16 @@ class SimpleBlog {
 	public function deletePost( $pid ){
 		$db = $this->db;
 		
+		// just to be save
+		$pid = intval( $pid );
 		
+		$sql = "
+			DELETE FROM posts WHERE id = $pid LIMIT 1;
+		";
 		
+		if( !$result = $db->query( $sql )) {
+			die('There was an error running the query [' . $db->error . ']');
+		}
 	}
 	
 	public function listPostJSON( $limit ){
