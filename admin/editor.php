@@ -132,6 +132,7 @@
 
   editor.setHTML(<?php echo json_encode($post_content); ?>);
 
+  $('.editor-container').click(editor.focus.bind(editor));
 
   $('.submit').click(function(){
     $.post('', {
