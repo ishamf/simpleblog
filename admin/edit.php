@@ -4,8 +4,7 @@ include('../lib/SimpleBlog.php');
 $blog = new SimpleBlog('localhost','root','','test');
 
 function bailOut(){
-//	header('Location: list.php');
-	exit;
+	header('Location: list.php');
 }
 
 if( !isset($_GET['id']) ) bailOut();
