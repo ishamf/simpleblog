@@ -38,7 +38,7 @@ class SimpleBlog {
 				postId int(11) NOT NULL,
 				name VARCHAR(256) NOT NULL,
 				email VARCHAR(256) NOT NULL,
-				content VARCHAR(1024) NOT NULL,
+				comment VARCHAR(1024) NOT NULL,
 				date_created TIMESTAMP,
 				FOREIGN KEY ( postId ) REFERENCES posts (id),
 				PRIMARY KEY (id)
@@ -156,7 +156,38 @@ class SimpleBlog {
 	}
 	
 	public function addComment( $pid, $name, $email, $content ){
+		$db = $this->db;
+		$pid = intval( $pid );
 		
+		$name = addslashes( $db->real_escape_string( $name ) );
+		$email = addslashes( $db->real_escape_string( $email ) );
+		$content = addslashes( $db->real_escape_string( $content ) );
+		
+		$sql = "
+			INSERT INTO comments ( postId, name, email, comment )
+			VALUES ( '$pid', '$name', '$email', '$content');
+		";
+		
+		if( !$result = $db->query( $sql )) {
+			die('There was an error running the query [' . $db->error . ']');
+		}
+	}
+	
+	public function getCommentsByPostId( $id ){
+		$db = $this->db;
+		$id = intval( $id );
+		
+		$sql = "
+			SELECT name, email, comment, date_created 
+			FROM comments
+			WHERE postId = '$id';
+		";
+		
+		if( !$result = $db->query( $sql )) {
+			die('There was an error running the query [' . $db->error . ']');
+		}
+		
+		return $result;
 	}
 };
 
