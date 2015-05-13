@@ -90,6 +90,32 @@ class SimpleBlog {
 		}
 	}
 	
+	public function updatePost( $pid, $title, $content, $date = 0 ){
+		$db = $this->db;
+		
+		if( empty( $date ) ){
+			$date = date("Y-m-d H:i:s", time()); ;
+		}
+		else {
+			$date = date("Y-m-d H:i:s", strtotime($date) ); ;
+		}
+
+		$pid = intval( $pid );
+		$title = addslashes( $db->real_escape_string( $title ) );
+		$content = addslashes( $db->real_escape_string( $content ) );
+		$date = addslashes( $db->real_escape_string( $date ) );
+		
+		$sql = "
+			UPDATE posts
+			SET title = '$title', content = '$content', date_created = '$date'
+			WHERE id = $pid;
+		";
+		
+		if( !$result = $db->query( $sql )) {
+			die('There was an error running the query [' . $db->error . ']');
+		}
+	}
+	
 	public function listPostJSON( $limit ){
 		
 	}
