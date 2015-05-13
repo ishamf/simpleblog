@@ -35,3 +35,10 @@ else {
 
 ?>
 <HR>
+
+<form action="comment.php?action=add&pid=<?php echo $id; ?>" method=POST>
+	<input name="name" />
+	<input name="email" />
+	<textarea name="comment"></textarea>
+	<input type=submit />
+</form>
