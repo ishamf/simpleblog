@@ -22,6 +22,8 @@ if( isset($_POST['post-title']) && isset($_POST['post-content']) && isset( $_POS
 	$post_content = addslashes( $_POST['post-content'] );
 	$post_title = addslashes( $_POST['post-title'] );
 	$post_date = addslashes( $_POST['post-date'] );
+
+	bailOut();
 }
 else {
 	$data = $resource->fetch_assoc();

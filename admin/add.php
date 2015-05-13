@@ -9,6 +9,8 @@ if( isset( $_POST['post-title'] ) && isset( $_POST['post-content']) ){
 	$date = $_POST['post-date'];
 	
 	$blog->addPost( $title, $content, $date );
+
+	header('Location: list.php');
 } else {
 	$post_content = ''; $post_title = ''; $post_date = '';
 
