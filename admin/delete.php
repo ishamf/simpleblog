@@ -4,4 +4,6 @@ $id = intval($_GET['id']);
 $blog = new SimpleBlog('localhost','root','','test');
 $blog->deletePost( $id );
 
+header('Location: list.php');
+
 ?>
