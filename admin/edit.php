@@ -23,7 +23,8 @@ if( isset($_POST['post-title']) && isset($_POST['post-content']) && isset( $_POS
 	$post_title = addslashes( $_POST['post-title'] );
 	$post_date = addslashes( $_POST['post-date'] );
 	
-	bailOut();
+	echo "Successfully Updated";
+	exit;
 }
 else {
 	$data = $resource->fetch_assoc();

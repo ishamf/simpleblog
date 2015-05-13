@@ -140,7 +140,8 @@
       'post-title': $('input[name=post-title]').val(),
       'post-date': $('input[name=post-date]').val(),
       'post-content': editor.getHTML()
-    }, function(){
+    }, function(data){
+//		alert(data);
       window.location.href = 'list.php';
     });
   });
