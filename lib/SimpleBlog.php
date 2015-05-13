@@ -93,12 +93,18 @@ class SimpleBlog {
 	}
 	
 	public function listPostJSON( $limit ){
+		
 	}
 	
 	public function listPost( $limit ){
+		
 	}
 	
 	public function viewPost( $id ){
+		
+	}
+	
+	public function addComment( $pid, $name, $email, $content ){
 		
 	}
 };
