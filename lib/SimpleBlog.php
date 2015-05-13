@@ -11,11 +11,11 @@ class SimpleBlog {
 		$this->init();
 	}
 	
-	function __destruct(){
+	public function __destruct(){
 		$this->db->close();
 	}
 	
-	function init(){
+	private function init(){
 		$db = $this->db;
 		
 		$postTableQuery = "
@@ -169,7 +169,7 @@ class SimpleBlog {
 		return $this->query( $sql );
 	}
 	
-	public function query( $query ){
+	private function query( $query ){
 		$db = $this->db;
 		if( !$result = $db->query( $query )) {
 			die('There was an error running the query [' . $db->error . ']');
