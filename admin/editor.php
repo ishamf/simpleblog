@@ -113,9 +113,15 @@
 
 <button class="submit"><?php echo $buttonText ?></button>
 
+<div id="dialog">
+  <input type="file" id="upload-file">
+  <button id="upload-submit">Upload</button>
+</div>
+
 <script src="../js/jquery-1.10.2.js"></script>
 <script src="../js/jquery-ui.js"></script>
 <script src="../js/quill.min.js"></script>
+<script src="../js/image-uploader.js"></script>
 <script>
   var editor = new Quill('.editor .editor-container', {
     modules: {
@@ -144,6 +150,30 @@
       window.location.href = 'list.php';
     });
   });
+
+  // Add image uploading capability to quill
+
+  $('.ql-image-tooltip .insert').after('<a class="cancel" href="#" style="border-top: 0;" id="upload-dialog">Upload</a>');
+
+  $('#dialog').hide()
+
+  $('#upload-dialog').click(function(){
+    $('#dialog').dialog()
+  })
+
+  $('#upload-submit').click(function(){
+
+    var location = editor.getSelection() ? editor.getSelection().start : (editor.getLength() - 1)
+
+    uploadImage($('#upload-file')[0].files[0])
+    .then(function(data){
+      editor.insertEmbed(location,
+                         'image',
+                         JSON.parse(data).data.link)
+    })
+  })
+
+
 
 
 </script>
